@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-ARG PORT
+ARG PORT=8000
 
 ENV PORT=${PORT}
 

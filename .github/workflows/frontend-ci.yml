@@ -12,16 +12,31 @@ jobs:
       id-token: write
       contents: read
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v4
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::885405362274:role/GithubActionsRole
 
-      - run: aws s3 ls 
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: 885405362274.dkr.ecr.us-east-1.amazonaws.com
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: true
+      #     tags: ${{ github.repository }}:${{ github.run_number }}
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+
+
+
+
 
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3

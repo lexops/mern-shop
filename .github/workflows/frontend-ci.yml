@@ -31,11 +31,11 @@ jobs:
         with:
           context: /frontend
           push: true
-          tags: 
-            - 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:latest
-            - 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:1.0.0
-          build-args:
-            - REACT_APP_BASE_URL=http://localhost:8000
+          tags: |
+            885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:latest
+            885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:1.0.0
+          build-args: |
+            REACT_APP_BASE_URL=http://localhost:8000
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

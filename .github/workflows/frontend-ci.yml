@@ -23,20 +23,21 @@ jobs:
         with:
           registry: 885405362274.dkr.ecr.us-east-1.amazonaws.com
 
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      # - name: Build and push
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     push: true
-      #     tags: ${{ github.repository }}:${{ github.run_number }}
-      #     cache-from: type=gha
-      #     cache-to: type=gha,mode=max
-
-
-
-
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: /frontend
+          push: true
+          tags: 
+            - 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:latest
+            - 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend:1.0.0
+          build-args:
+            - REACT_APP_BASE_URL=http://localhost:8000
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3

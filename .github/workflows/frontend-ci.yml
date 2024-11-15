@@ -1,0 +1,43 @@
+name: Frontend CI
+on:
+  workflow_dispatch: 
+
+jobs:
+  frontend-ci:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActionsRole
+
+      - run: aws s3 ls 
+
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v3
+      #   with:
+      #     terraform_version: 1.9.5
+
+      # - name: Terraform Init
+      #   working-directory: eks-api
+      #   run: |
+      #     terraform init \
+      #       -backend-config="region=${{ matrix.cluster.bucket_region }}" \
+      #       -backend-config="bucket=${{ matrix.cluster.account_id }}-sso-eks-api" \
+      #       -backend-config="key=${{ matrix.cluster.name }}/terraform.tfstate"
+
+      # - name: Terraform Apply
+      #   env:
+      #     AWS_REGION: ${{ matrix.cluster.region }}
+      #   working-directory: eks-api
+      #   run: |
+      #     terraform apply \
+      #       -auto-approve \
+      #       -var="cluster_name=${{ matrix.cluster.name }}"

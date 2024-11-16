@@ -17,6 +17,7 @@ const { connectToDB } = require("./database/db")
 
 // server init
 const server = express()
+const apiRouter = express.Router();
 
 // database connection
 connectToDB()
@@ -33,23 +34,24 @@ server.use(express.json())
 server.use(cookieParser())
 server.use(morgan("dev"))
 
-// routeMiddleware
-server.use("/auth", authRoutes)
-server.use("/users", userRoutes)
-server.use("/products", productRoutes)
-server.use("/orders", orderRoutes)
-server.use("/cart", cartRoutes)
-server.use("/brands", brandRoutes)
-server.use("/categories", categoryRoutes)
-server.use("/address", addressRoutes)
-server.use("/reviews", reviewRoutes)
-server.use("/wishlist", wishlistRoutes)
+// routeMiddleware added to apiRouter
+apiRouter.use("/auth", authRoutes);
+apiRouter.use("/users", userRoutes);
+apiRouter.use("/products", productRoutes);
+apiRouter.use("/orders", orderRoutes);
+apiRouter.use("/cart", cartRoutes);
+apiRouter.use("/brands", brandRoutes);
+apiRouter.use("/categories", categoryRoutes);
+apiRouter.use("/address", addressRoutes);
+apiRouter.use("/reviews", reviewRoutes);
+apiRouter.use("/wishlist", wishlistRoutes);
 
+apiRouter.get("/healthz", (req, res) => {
+    res.status(200).json({ message: 'running' });
+});
 
-server.get("/", (req, res) => {
-    res.status(200).json({ message: 'running' })
-})
+server.use("/api", apiRouter);
 
 server.listen(process.env.PORT || 8000, () => {
     console.log(`server [STARTED] ~ http://localhost:${process.env.PORT || 8000}`);
-})
+});

@@ -56,4 +56,4 @@ server.listen(process.env.PORT || 8000, () => {
     console.log(`server [STARTED] ~ http://localhost:${process.env.PORT || 8000}`);
 });
 
-// eh so questao de tempo pro fim do sofrimento
+// guerreiro de fe nao gela nem amarela

@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feat/ci
+    paths:
+      - 'terraform/dev/**'
 
 jobs:
   apply:

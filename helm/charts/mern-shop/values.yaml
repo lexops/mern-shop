@@ -1,0 +1,54 @@
+backend:
+  backend:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+    image:
+      repository: 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/backend
+      tag: 1.0.0
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  ports:
+  - name: "http"
+    port: 8000
+    targetPort: 8000
+  replicas: 2
+  type: ClusterIP
+backendConfig:
+  cookieExpirationDays: "30"
+  email: demo@gmail.com
+  loginTokenExpiration: 30d
+  origin: https://lexops.xyz
+  otpExpirationTime: "120000"
+  production: "false"
+backendSecrets:
+  mongoUri: "mongodb+srv://lexops:pUUeZAXrEEyLHQQ7@cluster0.ekai2.mongodb.net/mern-shop"
+  password: "helloWorld@123"
+  secretKey: "supersecret"
+frontend:
+  frontend:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+    image:
+      repository: 885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend
+      tag: 1.0.0
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: 80
+  replicas: 2
+  type: ClusterIP
+kubernetesClusterDomain: cluster.local

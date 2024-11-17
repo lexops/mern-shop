@@ -1,0 +1,465 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "backend": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "additionalProperties": false,
+          "properties": {
+            "containerSecurityContext": {
+              "additionalProperties": false,
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "default": false,
+                  "required": [],
+                  "title": "allowPrivilegeEscalation",
+                  "type": "boolean"
+                },
+                "readOnlyRootFilesystem": {
+                  "default": false,
+                  "required": [],
+                  "title": "readOnlyRootFilesystem",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "allowPrivilegeEscalation",
+                "readOnlyRootFilesystem"
+              ],
+              "title": "containerSecurityContext",
+              "type": "object"
+            },
+            "image": {
+              "additionalProperties": false,
+              "properties": {
+                "repository": {
+                  "default": "lexops/mern-shop-backend",
+                  "required": [],
+                  "title": "repository",
+                  "type": "string"
+                },
+                "tag": {
+                  "default": "1.0.0",
+                  "required": [],
+                  "title": "tag",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "repository",
+                "tag"
+              ],
+              "title": "image",
+              "type": "object"
+            },
+            "resources": {
+              "additionalProperties": false,
+              "properties": {
+                "limits": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "default": "500m",
+                      "required": [],
+                      "title": "cpu",
+                      "type": "string"
+                    },
+                    "memory": {
+                      "default": "512Mi",
+                      "required": [],
+                      "title": "memory",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "title": "limits",
+                  "type": "object"
+                },
+                "requests": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "default": "250m",
+                      "required": [],
+                      "title": "cpu",
+                      "type": "string"
+                    },
+                    "memory": {
+                      "default": "256Mi",
+                      "required": [],
+                      "title": "memory",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "title": "requests",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "limits",
+                "requests"
+              ],
+              "title": "resources",
+              "type": "object"
+            }
+          },
+          "required": [
+            "containerSecurityContext",
+            "image",
+            "resources"
+          ],
+          "title": "backend",
+          "type": "object"
+        },
+        "ports": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "default": "8000",
+                    "required": [],
+                    "title": "name",
+                    "type": "string"
+                  },
+                  "port": {
+                    "default": 8000,
+                    "required": [],
+                    "title": "port",
+                    "type": "integer"
+                  },
+                  "targetPort": {
+                    "default": 8000,
+                    "required": [],
+                    "title": "targetPort",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "port",
+                  "targetPort"
+                ],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "ports",
+          "type": "array"
+        },
+        "replicas": {
+          "default": 2,
+          "required": [],
+          "title": "replicas",
+          "type": "integer"
+        },
+        "type": {
+          "default": "ClusterIP",
+          "required": [],
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "backend",
+        "ports",
+        "replicas",
+        "type"
+      ],
+      "title": "backend",
+      "type": "object"
+    },
+    "backendConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "cookieExpirationDays": {
+          "default": "30",
+          "required": [],
+          "title": "cookieExpirationDays",
+          "type": "string"
+        },
+        "email": {
+          "default": "demo@gmail.com",
+          "required": [],
+          "title": "email",
+          "type": "string"
+        },
+        "loginTokenExpiration": {
+          "default": "30d",
+          "required": [],
+          "title": "loginTokenExpiration",
+          "type": "string"
+        },
+        "origin": {
+          "default": "http://localhost:8080",
+          "required": [],
+          "title": "origin",
+          "type": "string"
+        },
+        "otpExpirationTime": {
+          "default": "120000",
+          "required": [],
+          "title": "otpExpirationTime",
+          "type": "string"
+        },
+        "production": {
+          "default": "false",
+          "required": [],
+          "title": "production",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cookieExpirationDays",
+        "email",
+        "loginTokenExpiration",
+        "origin",
+        "otpExpirationTime",
+        "production"
+      ],
+      "title": "backendConfig",
+      "type": "object"
+    },
+    "backendSecrets": {
+      "additionalProperties": false,
+      "properties": {
+        "mongoUri": {
+          "default": "mongodb+srv://lexops:pUUeZAXrEEyLHQQ7@cluster0.ekai2.mongodb.net/mern-shop",
+          "required": [],
+          "title": "mongoUri",
+          "type": "string"
+        },
+        "password": {
+          "default": "helloWorld@123",
+          "required": [],
+          "title": "password",
+          "type": "string"
+        },
+        "secretKey": {
+          "default": "supersecret",
+          "required": [],
+          "title": "secretKey",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mongoUri",
+        "password",
+        "secretKey"
+      ],
+      "title": "backendSecrets",
+      "type": "object"
+    },
+    "frontend": {
+      "additionalProperties": false,
+      "properties": {
+        "frontend": {
+          "additionalProperties": false,
+          "properties": {
+            "containerSecurityContext": {
+              "additionalProperties": false,
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "default": false,
+                  "required": [],
+                  "title": "allowPrivilegeEscalation",
+                  "type": "boolean"
+                },
+                "readOnlyRootFilesystem": {
+                  "default": false,
+                  "required": [],
+                  "title": "readOnlyRootFilesystem",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "allowPrivilegeEscalation",
+                "readOnlyRootFilesystem"
+              ],
+              "title": "containerSecurityContext",
+              "type": "object"
+            },
+            "image": {
+              "additionalProperties": false,
+              "properties": {
+                "repository": {
+                  "default": "lexops/mern-shop-frontend",
+                  "required": [],
+                  "title": "repository",
+                  "type": "string"
+                },
+                "tag": {
+                  "default": "1.0.0",
+                  "required": [],
+                  "title": "tag",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "repository",
+                "tag"
+              ],
+              "title": "image",
+              "type": "object"
+            },
+            "resources": {
+              "additionalProperties": false,
+              "properties": {
+                "limits": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "default": "200m",
+                      "required": [],
+                      "title": "cpu",
+                      "type": "string"
+                    },
+                    "memory": {
+                      "default": "256Mi",
+                      "required": [],
+                      "title": "memory",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "title": "limits",
+                  "type": "object"
+                },
+                "requests": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "default": "100m",
+                      "required": [],
+                      "title": "cpu",
+                      "type": "string"
+                    },
+                    "memory": {
+                      "default": "128Mi",
+                      "required": [],
+                      "title": "memory",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "cpu",
+                    "memory"
+                  ],
+                  "title": "requests",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "limits",
+                "requests"
+              ],
+              "title": "resources",
+              "type": "object"
+            }
+          },
+          "required": [
+            "containerSecurityContext",
+            "image",
+            "resources"
+          ],
+          "title": "frontend",
+          "type": "object"
+        },
+        "ports": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "default": "8080",
+                    "required": [],
+                    "title": "name",
+                    "type": "string"
+                  },
+                  "port": {
+                    "default": 8080,
+                    "required": [],
+                    "title": "port",
+                    "type": "integer"
+                  },
+                  "targetPort": {
+                    "default": 80,
+                    "required": [],
+                    "title": "targetPort",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "port",
+                  "targetPort"
+                ],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "ports",
+          "type": "array"
+        },
+        "replicas": {
+          "default": 2,
+          "required": [],
+          "title": "replicas",
+          "type": "integer"
+        },
+        "type": {
+          "default": "ClusterIP",
+          "required": [],
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "frontend",
+        "ports",
+        "replicas",
+        "type"
+      ],
+      "title": "frontend",
+      "type": "object"
+    },
+    "global": {
+      "description": "Global values are values that can be accessed from any chart or subchart by exactly the same name.",
+      "required": [],
+      "title": "global",
+      "type": "object"
+    },
+    "kubernetesClusterDomain": {
+      "default": "cluster.local",
+      "required": [],
+      "title": "kubernetesClusterDomain",
+      "type": "string"
+    }
+  },
+  "required": [
+    "backend",
+    "backendConfig",
+    "backendSecrets",
+    "frontend",
+    "kubernetesClusterDomain"
+  ],
+  "type": "object"
+}

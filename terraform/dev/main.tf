@@ -56,4 +56,4 @@ module "k8s_addons" {
   eks_cluster_name      = module.k8s.cluster_name
 }
 
-#foo bar baz 123
+#foo bar baz 456

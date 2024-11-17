@@ -16,47 +16,12 @@ jobs:
     outputs:
       tag: ${{ steps.semver.outputs.tag }}
     steps:
-      - name: Set environment variables based on branch
-        uses: kanga333/variable-mapper@master
-        id: export-vars
-        with:
-          key: "${{ github.ref_name }}"
-          export_to: env
-          map: |
-            {
-              "main": {
-                "AWS_ACCOUNT_ID": "${{ vars.PROD_AWS_ACCOUNT_ID }}",
-                "AWS_REGION": "${{ vars.PROD_AWS_REGION }}",
-                "ECR_URL": "${{ vars.PROD_ECR_URL }}",
-                "GHA_ROLE_ARN": "${{ vars.PROD_GHA_ROLE_ARN }}",
-                "REACT_APP_BASE_URL": "${{ vars.PROD_REACT_APP_BASE_URL }}"
-              },
-              ".*": {
-                "AWS_ACCOUNT_ID": "${{ vars.DEV_AWS_ACCOUNT_ID }}",
-                "AWS_REGION": "${{ vars.DEV_AWS_REGION }}",
-                "ECR_URL": "${{ vars.DEV_ECR_URL }}",
-                "GHA_ROLE_ARN": "${{ vars.DEV_GHA_ROLE_ARN }}",
-                "REACT_APP_BASE_URL": "${{ vars.DEV_REACT_APP_BASE_URL }}"
-              }
-            }
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ env.GHA_ROLE_ARN }}
-
-      - name: Login to ECR
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.ECR_URL }}
-      
       - name: Create semver tag based on PR labels
         id: semver
         uses: K-Phoen/semver-release-action@master
         with:
-          release_branch: ${{ github.ref_name }}
-          release_strategy: none
+          release_branch: ${{ github.pull_request.base.ref }}
+          release_strategy: tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,6 +34,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DEV_ECR_URL }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -78,10 +54,10 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ${{ env.ECR_URL }}/mern-shop/frontend:${{ needs.setup.outputs.tag }}
-            ${{ env.ECR_URL }}/mern-shop/frontend:latest
+            ${{ vars.DEV_ECR_URL }}/mern-shop/frontend:${{ needs.setup.outputs.tag }}
+            ${{ vars.DEV_ECR_URL }}/mern-shop/frontend:latest
           build-args: |
-            REACT_APP_BASE_URL=${{ env.REACT_APP_BASE_URL }}
+            REACT_APP_BASE_URL=${{ vars.DEV_REACT_APP_BASE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -93,6 +69,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DEV_ECR_URL }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -103,7 +90,35 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ${{ env.ECR_URL }}/mern-shop/backend:${{ needs.setup.outputs.tag }}
-            ${{ env.ECR_URL }}/mern-shop/backend:latest
+            ${{ vars.DEV_ECR_URL }}/mern-shop/backend:${{ needs.setup.outputs.tag }}
+            ${{ vars.DEV_ECR_URL }}/mern-shop/backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy-to-dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    needs: 
+      - setup
+      - frontend-build
+      - backend-build
+    if: ${{ github.event.pull_request.merged == true }}
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Update Kubeconfig
+        run: |
+          aws eks update-kubeconfig --name ${{ vars.DEV_AWS_EKS_NAME }} 
+
+      - name: Deploy to Kubernetes (Dev)
+        run: |
+          helm upgrade mern-shop ./helm/charts/mern-shop \
+            --install \
+            --create-namespace \
+            --namespace dev \
+            --set frontend.frontend.image.tag=${{ needs.setup.outputs.tag }} \
+            --set backend.backend.image.tag=${{ needs.setup.outputs.tag }}

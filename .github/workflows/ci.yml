@@ -123,7 +123,7 @@ jobs:
 
       - name: Deploy to Kubernetes (Dev)
         run: |
-          helm upgrade mern-shop ./helm/charts/mern-shop \
+          helm upgrade dev ./helm/charts/mern-shop \
             --install \
             --create-namespace \
             --namespace dev \

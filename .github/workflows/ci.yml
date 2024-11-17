@@ -9,13 +9,14 @@ on:
       - 'frontend/**'
       - 'backend/**'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   setup:
-    name: Setup and Configure AWS
+    name: Create semver tag based on PR labels
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     outputs:
       tag: ${{ steps.semver.outputs.tag }}
     steps:

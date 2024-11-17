@@ -1,2 +1,7 @@
-node_modules
+**/node_modules
+**/.terraform
+**/.terraform.lock.hcl
 .env
+helm
+kompose
+frontend/build

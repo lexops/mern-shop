@@ -77,3 +77,15 @@ jobs:
             ${{ env.ECR_URL }}/mern-shop/backend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Get latest frontend tag from ECR
+        id: get_frontend_tag
+        run: |
+          FRONTEND_TAG=$(aws ecr describe-images --repository-name your-frontend-repo --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+          echo "Latest frontend tag: $FRONTEND_TAG"
+          echo "FRONTEND_TAG=$FRONTEND_TAG" >> $GITHUB_ENV
+
+      - name: Sync frontend tag with backend
+        run: |
+          aws ecr batch-get-image --repository-name your-frontend-repo --image-ids imageTag=$FRONTEND_TAG --query 'images[0].imageManifest' --output text | \
+          aws ecr put-image --repository-name your-frontend-repo --image-tag ${{ steps.semver.outputs.tag }} --image-manifest -

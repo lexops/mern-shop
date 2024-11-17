@@ -55,3 +55,5 @@ module "k8s_addons" {
   eks_oidc_provider_arn = module.k8s.oidc_provider_arn
   eks_cluster_name      = module.k8s.cluster_name
 }
+
+#foo

@@ -39,13 +39,11 @@ jobs:
 
       - name: Echo
         run: |
-          DIRS_CHANGED_COUNT=$(${{ steps.get_changed.outputs.all_changed_files }} | grep -c '^')
           if $DIRS_CHANGED_COUNT > 1; then
             echo "More than one directory changed"
             echo "Changed directories:"
             echo ${{ steps.get_changed.outputs.all_changed_files }}
             exit 1
-          fi
 
         # The step below is a workaround for the fact that creating environments 
         # is only available for users with GitHub Pro.

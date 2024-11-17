@@ -18,7 +18,7 @@ on:
 
 jobs:
   terraform:
-    name: "Terraform Infrastructure Change Management"
+    name: "Terraform"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,9 +27,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
 
-      - uses: Stockopedia/action-get-changed-files@v1
+      - name: Get changed directories
+        uses: Stockopedia/action-get-changed-files@v1
         id: get_changed
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

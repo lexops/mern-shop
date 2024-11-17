@@ -55,3 +55,5 @@ server.use("/api", apiRouter);
 server.listen(process.env.PORT || 8000, () => {
     console.log(`server [STARTED] ~ http://localhost:${process.env.PORT || 8000}`);
 });
+
+// foo

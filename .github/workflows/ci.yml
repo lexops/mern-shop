@@ -1,14 +1,13 @@
 name: Continous Integration
 
 on:
-  # pull_request:
-  #   branches:
-  #     - feat/ci
-  #   types: [closed]
-  #   paths:
-  #     - 'frontend/**'
-  #     - 'backend/**'
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - feat/ci
+    types: [closed]
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
 
 permissions:
   id-token: write
@@ -19,15 +18,14 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     outputs:
-      # tag: ${{ steps.semver.outputs.tag }}
-      tag: v4.2.0
+      tag: ${{ steps.semver.outputs.tag }}
     steps:
       - name: Create semver tag based on PR labels
         id: semver
         uses: K-Phoen/semver-release-action@master
         with:
           release_branch: ${{ github.pull_request.base.ref }}
-          release_strategy: tag
+          release_strategy: none
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

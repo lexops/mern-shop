@@ -24,7 +24,7 @@ jobs:
         id: semver
         uses: K-Phoen/semver-release-action@master
         with:
-          release_branch: ${{ github.pull_request.base_ref }}
+          release_branch: ${{ github.base_ref }}
           release_strategy: tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

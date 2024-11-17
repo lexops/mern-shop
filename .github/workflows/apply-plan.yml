@@ -3,7 +3,7 @@ name: Apply
 on:
   push:
     branches:
-      - main
+      - feat/ci
 
 permissions:
   contents: read

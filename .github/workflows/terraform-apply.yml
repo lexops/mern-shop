@@ -28,6 +28,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # The step below is a workaround for the fact that creating environments 
+      # is only available for users with GitHub Pro.
+      # https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-deployments/managing-environments-for-deployment#creating-an-environment
+
+      - name: Set environment variables based on branch
+        uses: kanga333/variable-mapper@master
+        id: export-vars
+        with:
+          key: "${{ github.ref_name }}"
+          export_to: env
+          map: |
+            {
+              "main": {
+                "AWS_ACCOUNT_ID": "${{ vars.PROD_AWS_ACCOUNT_ID }}",
+                "AWS_REGION": "${{ vars.PROD_AWS_REGION }}",
+                "GHA_ROLE_ARN": "${{ vars.PROD_GHA_ROLE_ARN }}",
+              },
+              ".*": {
+                "AWS_ACCOUNT_ID": "${{ vars.DEV_AWS_ACCOUNT_ID }}",
+                "AWS_REGION": "${{ vars.DEV_AWS_REGION }}",
+                "GHA_ROLE_ARN": "${{ vars.DEV_GHA_ROLE_ARN }}",
+              }
+            }
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

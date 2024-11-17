@@ -68,4 +68,4 @@ resource "helm_release" "mern-shop" {
   depends_on = [module.k8s_addons]
 }
 
-# foo
+# foobar

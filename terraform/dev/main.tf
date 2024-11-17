@@ -55,17 +55,3 @@ module "k8s_addons" {
   eks_oidc_provider_arn = module.k8s.oidc_provider_arn
   eks_cluster_name      = module.k8s.cluster_name
 }
-
-resource "helm_release" "mern-shop" {
-  namespace        = "mern-shop"
-  name             = "dev"
-  chart            = "../../helm/charts/mern-shop"
-  version          = "0.1.0"
-  create_namespace = true
-  cleanup_on_fail  = true
-  atomic           = true
-
-  depends_on = [module.k8s_addons]
-}
-
-# foobar

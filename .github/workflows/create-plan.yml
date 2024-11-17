@@ -17,6 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.DEV_AWS_REGION }}
+          role-to-assume: ${{ env.DEV_GHA_ROLE_ARN }}
+
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:

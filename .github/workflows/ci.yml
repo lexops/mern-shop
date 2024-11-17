@@ -5,6 +5,9 @@ on:
     branches:
       - feat/ci
     types: [closed]
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
 
 jobs:
   setup:

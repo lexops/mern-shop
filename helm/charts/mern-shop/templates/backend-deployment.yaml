@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mern-shop.fullname" . }}-backend
+  labels:
+    io.kompose.service: backend
+  {{- include "mern-shop.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: kompose convert -o kompose/
+    kompose.version: 1.34.0 (cbf2835db)
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: backend
+    {{- include "mern-shop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: backend
+      {{- include "mern-shop.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: kompose convert -o kompose/
+        kompose.version: 1.34.0 (cbf2835db)
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "mern-shop.fullname" . }}-backend-config
+        - secretRef:
+            name: {{ include "mern-shop.fullname" . }}-backend-secrets
+        image: {{ .Values.backend.backend.image.repository }}:{{ .Values.backend.backend.image.tag
+          | default .Chart.AppVersion }}
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /api/healthz
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: backend
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /api/healthz
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources: {{- toYaml .Values.backend.backend.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.backend.backend.containerSecurityContext |
+          nindent 10 }}
+      restartPolicy: Always

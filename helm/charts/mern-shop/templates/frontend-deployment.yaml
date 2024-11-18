@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mern-shop.fullname" . }}-frontend
+  labels:
+    io.kompose.service: frontend
+  {{- include "mern-shop.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: kompose convert -o kompose/
+    kompose.version: 1.34.0 (cbf2835db)
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: frontend
+    {{- include "mern-shop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: frontend
+      {{- include "mern-shop.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: kompose convert -o kompose/
+        kompose.version: 1.34.0 (cbf2835db)
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "mern-shop.fullname" . }}-frontend-config
+        image: {{ .Values.frontend.frontend.image.repository }}:{{ .Values.frontend.frontend.image.tag
+          | default .Chart.AppVersion }}
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: frontend
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources: {{- toYaml .Values.frontend.frontend.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.frontend.frontend.containerSecurityContext
+          | nindent 10 }}
+      restartPolicy: Always

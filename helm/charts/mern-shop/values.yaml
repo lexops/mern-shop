@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=values.schema.json
+backend:
+  backend:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+    image:
+      repository: "lexops/mern-shop/backend"
+      tag: ""
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  ports:
+  - name: "http"
+    port: 8000
+    targetPort: 8000
+  replicas: 2
+  type: ClusterIP
+backendConfig:
+  cookieExpirationDays: "30"
+  email: demo@gmail.com
+  loginTokenExpiration: 30d
+  origin: ""
+  otpExpirationTime: "120000"
+  production: "false"
+backendSecrets:
+  mongoUri: ""
+  password: ""
+  secretKey: ""
+frontend:
+  frontend:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+    image:
+      repository: "lexops/mern-shop/frontend"
+      tag: ""
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: 80
+  replicas: 2
+  type: ClusterIP
+frontendConfig:
+  backendUrl: ""
+kubernetesClusterDomain: cluster.local

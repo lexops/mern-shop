@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "mern-shop.fullname" . }}-mern-shop-ingress
+  labels:
+  {{- include "mern-shop.labels" . | nindent 4 }}
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: alb-mern-shop
+    alb.ingress.kubernetes.io/group.name: mern-shop
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  tls:
+  - hosts:
+    - lexops.xyz
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "mern-shop.fullname" . }}-backend'
+            port:
+              number: 8000
+        path: /api
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "mern-shop.fullname" . }}-frontend'
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

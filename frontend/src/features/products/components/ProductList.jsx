@@ -108,7 +108,7 @@ export const ProductList = () => {
         }
 
         dispatch(fetchProductsAsync(finalFilters))
-        
+
     },[filters,page,sort])
 
 
@@ -150,7 +150,7 @@ export const ProductList = () => {
         else if(cartItemAddStatus==='rejected'){
             toast.error("Error adding product to cart, please try again later")
         }
-        
+
     },[cartItemAddStatus])
 
     useEffect(()=>{
@@ -189,7 +189,7 @@ export const ProductList = () => {
             {/* fitlers section */}
             <Stack mb={'5rem'}  sx={{scrollBehavior:"smooth",overflowY:"scroll"}}>
 
-                    
+
                         <Typography variant='h4'>New Arrivals</Typography>
 
 
@@ -252,14 +252,14 @@ export const ProductList = () => {
             </Stack>
 
         </motion.div>
-        
+
         <Stack mb={'3rem'}>
-            
+
 
                 {/* banners section */}
                 {
-                    !is600 && 
-                
+                    !is600 &&
+
                 <Stack sx={{width:"100%",height:is800?"300px":is1200?"400px":"500px"}}>
                     <ProductBanner images={bannerImages}/>
                 </Stack>
@@ -270,7 +270,7 @@ export const ProductList = () => {
 
                     {/* sort options */}
                     <Stack flexDirection={'row'} mr={'2rem'} justifyContent={'flex-end'} alignItems={'center'} columnGap={5}>
-                                        
+
                         <Stack alignSelf={'flex-end'} width={'12rem'}>
                             <FormControl fullWidth>
                                     <InputLabel id="sort-dropdown">Sort</InputLabel>
@@ -290,7 +290,7 @@ export const ProductList = () => {
                                     </Select>
                             </FormControl>
                         </Stack>
-                    
+
                     </Stack>
 
                     {/* product grid */}
@@ -301,15 +301,15 @@ export const ProductList = () => {
                             ))
                         }
                     </Grid>
-                    
+
                     {/* pagination */}
                     <Stack alignSelf={is488?'center':'flex-end'} mr={is488?0:5} rowGap={2} p={is488?1:0}>
                         <Pagination size={is488?'medium':'large'} page={page}  onChange={(e,page)=>setPage(page)} count={Math.ceil(totalResults/ITEMS_PER_PAGE)} variant="outlined" shape="rounded" />
                         <Typography textAlign={'center'}>Showing {(page-1)*ITEMS_PER_PAGE+1} to {page*ITEMS_PER_PAGE>totalResults?totalResults:page*ITEMS_PER_PAGE} of {totalResults} results</Typography>
-                    </Stack>    
-                
+                    </Stack>
+
                 </Stack>
-                
+
         </Stack>
         </>
     }

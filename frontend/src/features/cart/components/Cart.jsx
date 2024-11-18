@@ -60,7 +60,7 @@ export const Cart = ({checkout}) => {
                 ))
             }
             </Stack>
-            
+
             {/* subtotal */}
             <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
 
@@ -80,7 +80,7 @@ export const Cart = ({checkout}) => {
 
                             <Stack flexDirection={'row'} justifyContent={'space-between'}>
                                 <Typography>Taxes</Typography>
-                                <Typography>${TAXES}</Typography> 
+                                <Typography>${TAXES}</Typography>
                             </Stack>
 
                             <hr/>
@@ -89,7 +89,7 @@ export const Cart = ({checkout}) => {
                                 <Typography>Total</Typography>
                                 <Typography>${subtotal+SHIPPING+TAXES}</Typography>
                             </Stack>
-                            
+
 
                         </Stack>
                     ):(
@@ -108,16 +108,16 @@ export const Cart = ({checkout}) => {
                 }
 
             </Stack>
-            
+
             {/* checkout or continue shopping */}
             {
-            !checkout && 
+            !checkout &&
             <Stack rowGap={'1rem'}>
                 <Button variant='contained' component={Link} to='/checkout'>Checkout</Button>
                 <motion.div style={{alignSelf:'center'}} whileHover={{y:2}}><Chip sx={{cursor:"pointer",borderRadius:"8px"}} component={Link} to={'/'} label="or continue shopping" variant='outlined'/></motion.div>
             </Stack>
             }
-    
+
         </Stack>
 
 

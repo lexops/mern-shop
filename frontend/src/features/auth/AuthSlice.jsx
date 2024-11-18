@@ -122,7 +122,7 @@ const authSlice=createSlice({
             state.resetPasswordError=null
         }
 
-        
+
     },
     extraReducers:(builder)=>{
         builder
@@ -223,7 +223,7 @@ const authSlice=createSlice({
                 state.errors=action.error
                 state.isAuthChecked=true
             })
-            
+
     }
 })
 
@@ -254,4 +254,3 @@ export const selectResetPasswordError=(state)=>state.AuthSlice.resetPasswordErro
 export const {clearAuthSuccessMessage,clearAuthErrors,resetAuthStatus,clearSignupError,resetSignupStatus,clearLoginError,resetLoginStatus,clearOtpVerificationError,resetOtpVerificationStatus,clearResendOtpError,clearResendOtpSuccessMessage,resetResendOtpStatus,clearForgotPasswordError,clearForgotPasswordSuccessMessage,resetForgotPasswordStatus,clearResetPasswordError,clearResetPasswordSuccessMessage,resetResetPasswordStatus}=authSlice.actions
 
 export default authSlice.reducer
-

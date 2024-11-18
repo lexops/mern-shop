@@ -63,7 +63,7 @@ export const ResetPassword = () => {
                             <Typography variant='h4' fontWeight={600}>Reset Password</Typography>
                             <Typography color={'GrayText'}>Please enter and confirm new password</Typography>
                         </Stack>
-                        
+
                         <Stack rowGap={'.5rem'}>
                             <MotionConfig whileHover={{y:-2}}>
 
@@ -71,12 +71,12 @@ export const ResetPassword = () => {
                                     <TextField type='password' fullWidth sx={{mt:1}} {...register("password",{required:"Please enter a password",pattern:{value:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,message:`at least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number, Can contain special characters`}})} placeholder='New Password'/>
                                     {errors.password && <FormHelperText sx={{mt:1}} error>{errors.password.message}</FormHelperText>}
                                 </motion.div>
-                                
+
                                 <motion.div>
                                     <TextField type='password' fullWidth sx={{mt:1}} {...register("confirmPassword",{required:"Please Confirm the password",validate:(value,formValues)=>value===formValues.password || "Passwords dosen't match"})} placeholder='Confirm New Password'/>
                                     {errors.confirmPassword && <FormHelperText sx={{mt:1}} error>{errors.confirmPassword.message}</FormHelperText>}
                                 </motion.div>
-                                
+
                             </MotionConfig>
                         </Stack>
 

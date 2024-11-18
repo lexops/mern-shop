@@ -13,7 +13,7 @@ export const theme = createTheme({
     },
   },
 
-  
+
 
   breakpoints: {
     values: {
@@ -57,7 +57,7 @@ export const theme = createTheme({
       "@media (max-width:960px)": {
         fontSize: "2.4rem",
       },
-      
+
       "@media (max-width:662px)": {
         fontSize: "2rem",
       },

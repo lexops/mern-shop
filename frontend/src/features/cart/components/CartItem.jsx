@@ -36,7 +36,7 @@ export const CartItem = ({id,thumbnail,title,category,brand,price,quantity,stock
 
   return (
     <Stack bgcolor={'white'} component={is900?'':Paper} p={is900?0:2} elevation={1}  flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
-        
+
         {/* image and details */}
         <Stack flexDirection={'row'} rowGap={'1rem'} alignItems={'center'} columnGap={2} flexWrap={'wrap'}>
 

@@ -88,12 +88,12 @@ export const Navbar=({isProductList=false})=> {
             >
 
               {
-                loggedInUser?.isAdmin && 
-              
+                loggedInUser?.isAdmin &&
+
                 <MenuItem  onClick={handleCloseUserMenu}>
                   <Typography component={Link} color={'text.primary'} sx={{textDecoration:"none"}} to="/admin/add-product" textAlign="center">Add new Product</Typography>
                 </MenuItem>
-              
+
               }
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -105,16 +105,16 @@ export const Navbar=({isProductList=false})=> {
             {loggedInUser.isAdmin && <Button variant='contained'>Admin</Button>}
             <Stack sx={{flexDirection:"row",columnGap:"1rem",alignItems:"center",justifyContent:"center"}}>
 
-            
+
             {
-            cartItems?.length>0 && 
+            cartItems?.length>0 &&
             <Badge  badgeContent={cartItems.length} color='error'>
               <IconButton onClick={()=>navigate("/cart")}>
                 <ShoppingCartOutlinedIcon />
                 </IconButton>
             </Badge>
             }
-            
+
             {
               !loggedInUser?.isAdmin &&
                   <Stack>
@@ -126,7 +126,7 @@ export const Navbar=({isProductList=false})=> {
             {
               isProductList && <IconButton onClick={handleToggleFilters}><TuneIcon sx={{color:isProductFilterOpen?"black":""}}/></IconButton>
             }
-            
+
             </Stack>
           </Stack>
         </Toolbar>

@@ -64,7 +64,7 @@ function App() {
     )
   )
 
-  
+
   return isAuthChecked ? <RouterProvider router={routes}/> : "";
 }
 

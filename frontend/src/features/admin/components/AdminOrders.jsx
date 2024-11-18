@@ -150,7 +150,7 @@ export const AdminOrders = () => {
                             label="Update status"
                             {...register('status',{required:'Status is required'})}
                             >
-                            
+
                             {
                               editOptions.map((option)=>(
                                 <MenuItem value={option}>{option}</MenuItem>
@@ -160,7 +160,7 @@ export const AdminOrders = () => {
                         </FormControl>
                         ):<Chip label={order.status} sx={getStatusColor(order.status)}/>
                         }
-                      
+
                     </TableCell>
 
                     {/* actions */}
@@ -192,13 +192,13 @@ export const AdminOrders = () => {
                 <Lottie animationData={noOrdersAnimation}/>
                 <Typography textAlign={'center'} alignSelf={'center'} variant='h6' fontWeight={400}>There are no orders currently</Typography>
             </Stack>
-              
 
-          </Stack>  
+
+          </Stack>
         }
-    
+
     </Stack>
-    
+
     </Stack>
   )
 }

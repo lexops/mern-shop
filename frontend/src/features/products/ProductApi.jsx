@@ -34,7 +34,7 @@ export const fetchProducts=async(filters)=>{
     if(filters.user){
         queryString+=`user=${filters.user}&`
     }
-    
+
     try {
         const res=await axiosi.get(`/products?${queryString}`)
         const totalResults=await res.headers.get("X-Total-Count")

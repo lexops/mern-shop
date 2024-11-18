@@ -32,7 +32,7 @@ export const Checkout = () => {
     const theme=useTheme()
     const is900=useMediaQuery(theme.breakpoints.down(900))
     const is480=useMediaQuery(theme.breakpoints.down(480))
-    
+
     useEffect(()=>{
         if(addressStatus==='fulfilled'){
             reset()
@@ -48,7 +48,7 @@ export const Checkout = () => {
             navigate(`/order-success/${currentOrder?._id}`)
         }
     },[currentOrder])
-    
+
     const handleAddAddress=(data)=>{
         const address={...data,user:loggedInUser._id}
         dispatch(addAddressAsync(address))
@@ -149,7 +149,7 @@ export const Checkout = () => {
                 </Grid>
 
             </Stack>
-            
+
             {/* payment methods */}
             <Stack rowGap={3}>
 
@@ -157,7 +157,7 @@ export const Checkout = () => {
                         <Typography variant='h6'>Payment Methods</Typography>
                         <Typography variant='body2' color={'text.secondary'}>Please select a payment method</Typography>
                     </Stack>
-                    
+
                     <Stack rowGap={2}>
 
                         <Stack flexDirection={'row'} justifyContent={'flex-start'} alignItems={'center'}>

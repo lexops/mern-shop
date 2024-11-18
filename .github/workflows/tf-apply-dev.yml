@@ -34,4 +34,6 @@ jobs:
           var_file: terraform/dev/terraform.tfvars
           backend_config: ${{ vars.DEV_AWS_BACKEND_CONFIG }}
         env:
-          TERRAFORM_PRE_RUN: ${{ vars.TF_PRE_RUN }}
+          TERRAFORM_PRE_RUN: |
+            chmod +x tf-pre-run.sh
+            ./tf-pre-run.sh

@@ -35,7 +35,5 @@ jobs:
           backend_config: ${{ vars.DEV_AWS_BACKEND_CONFIG }}
         env:
           TERRAFORM_PRE_RUN: |
-            pwd
-            ls -la | grep tf-pre-run.sh
             chmod +x tf-pre-run.sh
             ./tf-pre-run.sh

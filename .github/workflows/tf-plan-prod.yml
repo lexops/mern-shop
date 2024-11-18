@@ -1,11 +1,11 @@
-name: Create terraform plan for dev
+name: Create terraform plan for prod
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - 'terraform/dev/*.tf'
+      - 'terraform/prod/*.tf'
 
 jobs:
   plan:
@@ -24,15 +24,15 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: ${{ vars.DEV_AWS_REGION }}
-          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+          aws-region: ${{ vars.prod_AWS_REGION }}
+          role-to-assume: ${{ vars.prod_GHA_ROLE_ARN }}
 
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
-          path: terraform/dev
-          var_file: terraform/dev/terraform.tfvars
-          backend_config_file: terraform/dev/backend.tfvars
+          path: terraform/prod
+          var_file: terraform/PROD/terraform.tfvars
+          backend_config_file: terraform/PROD/backend.tfvars
         env:
           TERRAFORM_PRE_RUN: |
             chmod +x tf-pre-run.sh

@@ -1,11 +1,11 @@
-name: Terrafrom Apply in dev
+name: Terrafrom Apply in prod
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'terraform/dev/**'
+      - 'terraform/prod/**'
 
 jobs:
   apply:
@@ -27,16 +27,16 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: ${{ vars.DEV_AWS_REGION }}
-          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+          aws-region: ${{ vars.PROD_AWS_REGION }}
+          role-to-assume: ${{ vars.PROD_GHA_ROLE_ARN }}
 
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
           auto_approve: ${{ env.GIT_COMMIT_COMMITTER_NAME == 'github-actions[bot]' }}
-          path: terraform/dev
-          var_file: terraform/dev/terraform.tfvars
-          backend_config_file: terraform/dev/backend.tfvars
+          path: terraform/prod
+          var_file: terraform/prod/terraform.tfvars
+          backend_config_file: terraform/prod/backend.tfvars
         env:
           TERRAFORM_PRE_RUN: |
             chmod +x tf-pre-run.sh

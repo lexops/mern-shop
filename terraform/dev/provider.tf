@@ -1,3 +1,28 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.75.1"
+    }
+
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.14.0"
+    }
+
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.16.1"
+    }
+  }
+
+  backend "s3" {
+    bucket  = "desafio-hotmart-tfstate"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
 
 provider "aws" {}
 

@@ -6,8 +6,8 @@ module "secrets_manager" {
 
   # Secret
   name_prefix             = var.name
-  description             = "Example Secrets Manager secret"
   recovery_window_in_days = 0
+  ignore_secret_changes   = true
 
   # Policy
   create_policy       = true
@@ -19,7 +19,8 @@ module "secrets_manager" {
         type = "AWS"
         identifiers = [
           "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-          "${data.aws_caller_identity.current.arn}"
+          "${data.aws_caller_identity.current.arn}",
+          "arn:aws:iam::${data.aws_caller_identity.current.arn}",
         ]
       }]
       actions   = ["secretsmanager:GetSecretValue"]

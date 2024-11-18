@@ -23,7 +23,7 @@ module "eks" {
     default = {
       ami_type       = "BOTTLEROCKET_x86_64"
       instance_types = ["t3.medium"]
-      spot           = true
+      spot           = var.spot
 
       min_size = 0
       max_size = 5

@@ -32,7 +32,7 @@ jobs:
         with:
           path: terraform/dev
           var_file: terraform/dev/terraform.tfvars
-          backend_config_file: terraform/dev/backend.tf
+          backend_config_file: terraform/dev/backend.tfvars
         env:
           TERRAFORM_PRE_RUN: |
             chmod +x tf-pre-run.sh

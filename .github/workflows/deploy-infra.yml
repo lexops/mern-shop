@@ -44,7 +44,7 @@ jobs:
           auto_approve: true
           path: terraform/${{ env.ENVIRONMENT }}
           var_file: terraform/${{ env.ENVIRONMENT }}/terraform.tfvars
-          backend_config_file: terraform/${{ env.ENVIRONMENT }}/backend.tf
+          backend_config_file: terraform/${{ env.ENVIRONMENT }}/backend.tfvars
         env:
           TERRAFORM_PRE_RUN: |
             chmod +x tf-pre-run.sh

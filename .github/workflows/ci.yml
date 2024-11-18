@@ -119,11 +119,17 @@ jobs:
         run: |
           aws eks update-kubeconfig --name ${{ vars.DEV_AWS_EKS_NAME }}
 
-      - name: Deploy to Kubernetes (Dev)
+      - name: Setup hcledit
         run: |
-          helm upgrade dev ./helm/charts/mern-shop \
-            --install \
-            --create-namespace \
-            --namespace dev \
-            --set frontend.frontend.image.tag=${{ needs.setup.outputs.tag }} \
-            --set backend.backend.image.tag=${{ needs.setup.outputs.tag }}
+          wget https://github.com/minamijoyo/hcledit/releases/download/v0.2.15/hcledit_0.2.15_linux_amd64.tar.gz
+          tar -xzvf hcledit_0.2.15_linux_amd64.tar.gz
+          mv hcledit ~/.local/bin
+          hcledit version
+
+      - name: Update Helm Release via hcledit
+        run: |
+          hcledit attribute set mern_shop_version ${{ needs.setup.outputs.tag }} \
+          -f ./terraform/dev/terraform.tfvars > terraform.tfvars
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v5

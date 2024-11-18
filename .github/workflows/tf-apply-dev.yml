@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
+      contents: write
       pull-requests: write
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Expose git commit data
+        uses: rlespinasse/git-commit-data-action@v1
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -30,6 +33,7 @@ jobs:
       - name: terraform apply
         uses: dflook/terraform-apply@v1
         with:
+          auto_approve: ${{ env.GIT_COMMIT_COMMITTER_NAME == 'github-actions[bot]' }}
           path: terraform/dev
           var_file: terraform/dev/terraform.tfvars
           backend_config: ${{ vars.DEV_AWS_BACKEND_CONFIG }}

@@ -6,7 +6,7 @@ exports.getById=async(req,res)=>{
         const result=(await User.findById(id)).toObject()
         delete result.password
         res.status(200).json(result)
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({message:'Error getting your details, please try again later'})

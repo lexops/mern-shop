@@ -50,7 +50,7 @@ exports.getAll = async (req, res) => {
         res.set("X-Total-Count",totalDocs)
 
         res.status(200).json(results)
-    
+
     } catch (error) {
         console.log(error);
         res.status(500).json({message:'Error fetching products, please try again later'})
@@ -100,5 +100,3 @@ exports.deleteById=async(req,res)=>{
         res.status(500).json({message:'Error deleting product, please try again later'})
     }
 }
-
-

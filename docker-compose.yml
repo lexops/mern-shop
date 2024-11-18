@@ -2,9 +2,10 @@ services:
   frontend:
     build:
       context: frontend
-      args:
-        REACT_APP_BASE_URL: 'http://localhost:8000'
     container_name: frontend
+    environment:
+      # BACKEND_URL: 'http://localhost:8000/api'
+      BACKEND_URL: 'http://localhost:8000/api'
     ports:
       - '8080:80'
     depends_on:
@@ -13,18 +14,15 @@ services:
   backend:
     build:
       context: backend
-      args:
-        PORT: '8000'
     container_name: backend
-    # volumes:
-    #   - ./global-bundle.pem:/app/global-bundle.pem
     ports:
       - '8000:8000'
-    # command: [ 'sh', '-c', 'npm run seed && npm run start' ]
+    command: [ 'sh', '-c', 'npm run seed && npm run start' ]
     depends_on:
       - mongo
     environment:
       MONGO_URI: 'mongodb://mongo:27017/mern-shop'
+      # Frontend URL for CORS
       ORIGIN: 'http://localhost:8080'
       EMAIL: 'demo@gmail.com'
       PASSWORD: 'helloWorld@123'

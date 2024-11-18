@@ -36,13 +36,13 @@
               "additionalProperties": false,
               "properties": {
                 "repository": {
-                  "default": "885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/backend",
+                  "default": "lexops/mern-shop/backend",
                   "required": [],
                   "title": "repository",
                   "type": "string"
                 },
                 "tag": {
-                  "default": "1.0.0",
+                  "default": "",
                   "required": [],
                   "title": "tag",
                   "type": "string"
@@ -204,7 +204,7 @@
           "type": "string"
         },
         "origin": {
-          "default": "https://lexops.xyz",
+          "default": "",
           "required": [],
           "title": "origin",
           "type": "string"
@@ -237,19 +237,19 @@
       "additionalProperties": false,
       "properties": {
         "mongoUri": {
-          "default": "mongodb+srv://lexops:pUUeZAXrEEyLHQQ7@cluster0.ekai2.mongodb.net/mern-shop",
+          "default": "",
           "required": [],
           "title": "mongoUri",
           "type": "string"
         },
         "password": {
-          "default": "helloWorld@123",
+          "default": "",
           "required": [],
           "title": "password",
           "type": "string"
         },
         "secretKey": {
-          "default": "supersecret",
+          "default": "",
           "required": [],
           "title": "secretKey",
           "type": "string"
@@ -296,13 +296,13 @@
               "additionalProperties": false,
               "properties": {
                 "repository": {
-                  "default": "885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend",
+                  "default": "lexops/mern-shop/frontend",
                   "required": [],
                   "title": "repository",
                   "type": "string"
                 },
                 "tag": {
-                  "default": "1.0.0",
+                  "default": "",
                   "required": [],
                   "title": "tag",
                   "type": "string"
@@ -446,7 +446,7 @@
       "additionalProperties": false,
       "properties": {
         "backendUrl": {
-          "default": "https://lexops.xyz/api",
+          "default": "",
           "required": [],
           "title": "backendUrl",
           "type": "string"

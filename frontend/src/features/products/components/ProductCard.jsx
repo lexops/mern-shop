@@ -61,7 +61,7 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
                 <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
                     <Typography variant='h6' fontWeight={400}>{title}</Typography>
                     {
-                    !isAdminCard && 
+                    !isAdminCard &&
                     <motion.div whileHover={{scale:1.3,y:-10,zIndex:100}} whileTap={{scale:1}} transition={{duration:.4,type:"spring"}}>
                         <Checkbox onClick={(e)=>e.stopPropagation()} checked={isProductAlreadyinWishlist} onChange={(e)=>handleAddRemoveFromWishlist(e,id)} icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:'red'}} />} />
                     </motion.div>
@@ -84,7 +84,7 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
                     </motion.button>
                     :''
                 }
-                
+
             </Stack>
             {
                 stockQuantity<=20 && (
@@ -92,12 +92,12 @@ export const ProductCard = ({id,title,price,thumbnail,brand,stockQuantity,handle
                 )
             }
         </Stack>
-    </Stack> 
+    </Stack>
     :''
-    
-    
+
+
     }
-    
+
     </>
   )
 }

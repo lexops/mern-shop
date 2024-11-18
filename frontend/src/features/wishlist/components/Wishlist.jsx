@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { selectLoggedInUser } from '../../auth/AuthSlice';
 import { emptyWishlistAnimation, loadingAnimation } from '../../../assets';
-import Lottie from 'lottie-react' 
+import Lottie from 'lottie-react'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useForm } from "react-hook-form"
 import {addToCartAsync, resetCartItemAddStatus, selectCartItemAddStatus, selectCartItems} from '../../cart/CartSlice'
@@ -34,7 +34,7 @@ export const Wishlist = () => {
   const is1130=useMediaQuery(theme.breakpoints.down(1130))
   const is642=useMediaQuery(theme.breakpoints.down(642))
   const is480=useMediaQuery(theme.breakpoints.down(480))
-  
+
   const handleAddRemoveFromWishlist=(e,productId)=>{
     if(e.target.checked){
         const data={user:loggedInUser?._id,product:productId}
@@ -45,7 +45,7 @@ export const Wishlist = () => {
         const index=wishlistItems.findIndex((item)=>item.product._id===productId)
         dispatch(deleteWishlistItemByIdAsync(wishlistItems[index]._id));
     }
-  } 
+  }
 
   useEffect(()=>{
     window.scrollTo({
@@ -172,7 +172,7 @@ export const Wishlist = () => {
                       <Stack component={is480?"":Paper} elevation={1} >
 
                           <ProductCard item key={item._id} brand={item.product.brand.name} id={item.product._id} price={item.product.price} stockQuantity={item.product.stockQuantity} thumbnail={item.product.thumbnail} title={item.product.title} handleAddRemoveFromWishlist={handleAddRemoveFromWishlist} isWishlistCard={true}/>
-                        
+
                         <Stack paddingLeft={2} paddingRight={2} paddingBottom={2}>
 
                           {/* note heading and icon */}
@@ -185,9 +185,9 @@ export const Wishlist = () => {
                             editIndex===index?(
 
                               <Stack rowGap={2}>
-                                
+
                                 <TextField multiline rows={4} value={editValue} onChange={(e)=>setEditValue(e.target.value)}/>
-                                
+
                                 <Stack flexDirection={'row'} alignSelf={'flex-end'} columnGap={1}>
                                     <Button onClick={()=>handleNoteUpdate(item._id)} size='small' variant='contained'>Update</Button>
                                     <Button onClick={()=>setEditIndex(-1)} size='small' variant='outlined' color='error'>Cancel</Button>
@@ -204,8 +204,8 @@ export const Wishlist = () => {
                             cartItems.some((cartItem)=>cartItem.product._id===item.product._id)?
                             <Button sx={{mt:4}} size='small' variant='outlined' component={Link} to={'/cart'}>Already in cart</Button>:<Button sx={{mt:4}} size='small' onClick={()=>handleAddToCart(item.product._id)} variant='outlined'>Add To Cart</Button>
                           }
-                          
-                          
+
+
                         </Stack>
                       </Stack>
                     ))
@@ -213,10 +213,10 @@ export const Wishlist = () => {
                 </Grid>
               }
             </Stack>
-        
+
         </Stack>
         }
-        
+
     </Stack>
   )
 }

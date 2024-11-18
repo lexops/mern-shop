@@ -27,7 +27,7 @@ export const UserOrders = () => {
     const is480=useMediaQuery(theme.breakpoints.down("480"))
 
     const cartItemAddStatus=useSelector(selectCartItemAddStatus)
-    
+
     useEffect(()=>{
         window.scrollTo({
             top:0,
@@ -80,7 +80,7 @@ export const UserOrders = () => {
             </Stack>
             :
             <Stack width={is1200?"auto":"60rem"} p={is480?2:4} mb={'5rem'}>
-                
+
                 {/* heading and navigation */}
                 <Stack flexDirection={'row'} columnGap={2} >
                     {
@@ -88,7 +88,7 @@ export const UserOrders = () => {
                         <IconButton component={Link} to={"/"}><ArrowBackIcon fontSize='large'/></IconButton>
                     </motion.div>
                     }
-    
+
 
                     <Stack rowGap={1} >
                         <Typography variant='h4' fontWeight={500}>Order history</Typography>
@@ -104,7 +104,7 @@ export const UserOrders = () => {
                         {
                             orders && orders.map((order)=>(
                                 <Stack p={is480?0:2} component={is480?"":Paper} elevation={1} rowGap={2}>
-                                    
+
                                     {/* upper */}
                                     <Stack flexDirection={'row'} rowGap={'1rem'}  justifyContent={'space-between'} flexWrap={'wrap'}>
                                         <Stack flexDirection={'row'} columnGap={4} rowGap={'1rem'} flexWrap={'wrap'}>
@@ -134,9 +134,9 @@ export const UserOrders = () => {
 
                                         {
                                             order.item.map((product)=>(
-                                                
+
                                                 <Stack mt={2} flexDirection={'row'} rowGap={is768?'2rem':''} columnGap={4} flexWrap={is768?"wrap":"nowrap"}>
-                                                    
+
                                                     <Stack>
                                                         <img style={{width:"100%",aspectRatio:is480?3/2:1/1,objectFit:"contain"}} src={product.product.images[0]} alt="" />
                                                     </Stack>
@@ -177,15 +177,15 @@ export const UserOrders = () => {
                                     <Stack mt={2} flexDirection={'row'} justifyContent={'space-between'}>
                                         <Typography mb={2}>Status : {order.status}</Typography>
                                     </Stack>
-                                        
+
                                 </Stack>
                             ))
 
                         }
-                        
+
                         {/* no orders animation */}
                         {
-                        !orders.length && 
+                        !orders.length &&
                             <Stack mt={is480?'2rem':0} mb={'7rem'} alignSelf={'center'} rowGap={2}>
 
                                 <Stack width={is660?"auto":'30rem'} height={is660?"auto":'30rem'}>
@@ -198,9 +198,9 @@ export const UserOrders = () => {
                         }
 
                 </Stack>
-            
+
             </Stack>
-        
+
         }
 
     </Stack>

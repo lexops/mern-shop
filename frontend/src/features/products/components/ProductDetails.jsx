@@ -66,14 +66,14 @@ export const ProductDetails = () => {
 
     const wishlistItemAddStatus=useSelector(selectWishlistItemAddStatus)
     const wishlistItemDeleteStatus=useSelector(selectWishlistItemDeleteStatus)
-    
+
     useEffect(()=>{
         window.scrollTo({
             top:0,
             behavior:"instant"
         })
     },[])
-    
+
     useEffect(()=>{
         if(id){
             dispatch(fetchProductByIdAsync(id))
@@ -144,7 +144,7 @@ export const ProductDetails = () => {
             setQuantity(quantity-1)
         }
     }
-    
+
     const handleIncreaseQty=()=>{
         if(quantity<20 && quantity<product.stockQuantity){
             setQuantity(quantity+1)
@@ -181,7 +181,7 @@ export const ProductDetails = () => {
     const handleStepChange = (step) => {
         setActiveStep(step);
     };
-    
+
 
   return (
     <>
@@ -193,7 +193,7 @@ export const ProductDetails = () => {
             </Stack>
             :
             <Stack>
-                
+
                 {/* product details */}
                 <Stack width={is480?"auto":is1420?"auto":'88rem'} p={is480?2:0} height={is840?"auto":"50rem"} rowGap={5} mt={is840?0:5} justifyContent={'center'} mb={5} flexDirection={is840?"column":"row"} columnGap={is990?"2rem":"5rem"}>
 
@@ -210,7 +210,7 @@ export const ProductDetails = () => {
                                 ))
                             }
                         </Stack>}
-                        
+
                         {/* selected image */}
                         <Stack mt={is480?"0rem":'5rem'}>
                             {
@@ -221,7 +221,7 @@ export const ProductDetails = () => {
                                         product?.images.map((image,index) => (
                                         <div key={index} style={{width:"100%",height:'100%'}}>
                                             {
-                                            Math.abs(activeStep - index) <= 2 
+                                            Math.abs(activeStep - index) <= 2
                                                 ?
                                                 <Box component="img" sx={{width:'100%',objectFit:"contain",overflow:"hidden",aspectRatio:1/1}} src={image} alt={product?.title} />
                                                 :
@@ -268,13 +268,13 @@ export const ProductDetails = () => {
                             <Typography>{product?.description}</Typography>
                             <hr />
                         </Stack>
-                        
+
 
                         {/* color, size and add-to-cart */}
 
                         {
                             !loggedInUser?.isAdmin &&
-                        
+
                         <Stack sx={{rowGap:"1.3rem"}} width={'fit-content'}>
 
                             {/* colors */}
@@ -290,7 +290,7 @@ export const ProductDetails = () => {
                                     }
                                 </Stack>
                             </Stack>
-                            
+
                             {/* size */}
                             <Stack flexDirection={'row'} alignItems={'center'} columnGap={is387?'5px':'1rem'} width={'fit-content'}>
                                 <Typography>Size: </Typography>
@@ -307,10 +307,10 @@ export const ProductDetails = () => {
 
                             {/* quantity , add to cart and wishlist */}
                             <Stack flexDirection={"row"} columnGap={is387?".3rem":"1.5rem"} width={'100%'} >
-                                
+
                                 {/* qunatity */}
                                 <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                                    
+
                                     <MotionConfig whileHover={{scale:1.050}} whileTap={{scale:1}}>
                                         <motion.button onClick={handleDecreaseQty}  style={{padding:"10px 15px",fontSize:"1.050rem",backgroundColor:"",color:"black",outline:"none",border:'1px solid black',borderRadius:"8px"}}>-</motion.button>
                                         <p style={{margin:"0 1rem",fontSize:"1.1rem",fontWeight:'400'}}>{quantity}</p>
@@ -318,7 +318,7 @@ export const ProductDetails = () => {
                                     </MotionConfig>
 
                                 </Stack>
-                                
+
                                 {/* add to cart */}
                                 {
                                     isProductAlreadyInCart?
@@ -335,13 +335,13 @@ export const ProductDetails = () => {
                             </Stack>
 
                         </Stack>
-                        
+
                         }
 
 
                         {/* product perks */}
                         <Stack mt={3} sx={{justifyContent:"center",alignItems:'center',border:"1px grayText solid",borderRadius:"7px"}}>
-                            
+
                             <Stack p={2} flexDirection={'row'} alignItems={"center"} columnGap={'1rem'} width={'100%'} justifyContent={'flex-sart'}>
                                 <Box>
                                     <LocalShippingOutlinedIcon/>
@@ -365,17 +365,17 @@ export const ProductDetails = () => {
                         </Stack>
 
                     </Stack>
-                    
+
                 </Stack>
 
                 {/* reviews */}
                 <Stack width={is1420?"auto":'88rem'} p={is480?2:0}>
-                    <Reviews productId={id} averageRating={averageRating}/>       
+                    <Reviews productId={id} averageRating={averageRating}/>
                 </Stack>
-            
+
             </Stack>
         }
-                
+
     </Stack>
     }
     </>

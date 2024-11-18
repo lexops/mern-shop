@@ -21,7 +21,7 @@ export const Reviews = ({productId,averageRating}) => {
     const loggedInUser=useSelector(selectLoggedInUser)
     const reviewStatus=useSelector(selectReviewStatus)
     const ref=useRef(null)
-    
+
 
 
     const reviewAddStatus=useSelector(selectReviewAddStatus)
@@ -45,7 +45,7 @@ export const Reviews = ({productId,averageRating}) => {
 
         reset()
         setValue(1)
-        
+
     },[reviewAddStatus])
 
     useEffect(()=>{
@@ -95,7 +95,7 @@ export const Reviews = ({productId,averageRating}) => {
         setWriteReview(false)
     }
 
-    
+
 
   return (
         <Stack rowGap={5} alignSelf={"flex-start"}  width={is480?"90vw":is840?"25rem":'40rem'}>
@@ -118,7 +118,7 @@ export const Reviews = ({productId,averageRating}) => {
                                     [5,4,3,2,1].map((number)=>(
                                         <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} columnGap={1}>
                                             <Typography sx={{whiteSpace:"nowrap"}}>{number} star</Typography>
-                                            <LinearProgress sx={{width:"100%",height:"1rem",borderRadius:"4px"}} variant='determinate' value={(ratingCounts[number]/reviews?.length)*100}/>   
+                                            <LinearProgress sx={{width:"100%",height:"1rem",borderRadius:"4px"}} variant='determinate' value={(ratingCounts[number]/reviews?.length)*100}/>
                                             <Typography>{parseInt(ratingCounts[number]/reviews?.length*100)}%</Typography>
                                         </Stack>
                                     ))
@@ -140,22 +140,22 @@ export const Reviews = ({productId,averageRating}) => {
                 {reviews?.map((review)=>(<ReviewItem key={review._id} id={review._id} userid={review.user._id} comment={review.comment} createdAt={review.createdAt} rating={review.rating} username={review.user.name} />))}
             </Stack>
 
-            
-            {   
+
+            {
                 // add review form
                 writeReview?
                 (
                 <Stack rowGap={3} position={'relative'} component={'form'} noValidate onSubmit={handleSubmit(handleAddReview)}>
 
                     <TextField id='reviewTextFeild' {...register("comment",{required:true})} sx={{mt:4,width:is840?"100%":"40rem"}}  multiline rows={6} fullWidth placeholder='Write a review...'/>
-                    
+
                     <Stack>
                         <Typography gutterBottom variant='body2'>How much did you like the product?</Typography>
                         <motion.div style={{width:"fit-content"}} whileHover={{scale:1.050,x:2}} whileTap={{scale:1}}>
                             <Rating  size='large' value={value} onChange={(e) => setValue(e.target.value)}/>
                         </motion.div>
                     </Stack>
-                    
+
                     <Stack flexDirection={'row'} alignSelf={'flex-end'} alignItems={'center'} columnGap={'.2rem'}>
                         <MotionConfig whileTap={{scale:1}} whileHover={{scale:1.050}}>
                             <motion.div>

@@ -35,7 +35,7 @@ export const AdminDashBoard = () => {
     const is500=useMediaQuery(theme.breakpoints.down(500))
     const isProductFilterOpen=useSelector(selectProductIsFilterOpen)
     const totalResults=useSelector(selectProductTotalResults)
-    
+
     const is1200=useMediaQuery(theme.breakpoints.down(1200))
     const is800=useMediaQuery(theme.breakpoints.down(800))
     const is700=useMediaQuery(theme.breakpoints.down(700))
@@ -53,7 +53,7 @@ export const AdminDashBoard = () => {
         finalFilters['sort']=sort
 
         dispatch(fetchProductsAsync(finalFilters))
-        
+
     },[filters,sort,page])
 
     const handleBrandFilters=(e)=>{
@@ -97,7 +97,7 @@ export const AdminDashBoard = () => {
         {/* fitlers section */}
         <Stack mb={'5rem'}  sx={{scrollBehavior:"smooth",overflowY:"scroll"}}>
 
-        
+
             <Typography variant='h4'>New Arrivals</Typography>
 
 
@@ -187,7 +187,7 @@ export const AdminDashBoard = () => {
             </Stack>
 
         </Stack>
-     
+
         <Grid gap={2} container flex={1} justifyContent={'center'} alignContent={"center"}>
             {
                 products.map((product)=>(
@@ -213,9 +213,9 @@ export const AdminDashBoard = () => {
         <Stack alignSelf={is488?'center':'flex-end'} mr={is488?0:5} rowGap={2} p={is488?1:0}>
             <Pagination size={is488?'medium':'large'} page={page}  onChange={(e,page)=>setPage(page)} count={Math.ceil(totalResults/ITEMS_PER_PAGE)} variant="outlined" shape="rounded" />
             <Typography textAlign={'center'}>Showing {(page-1)*ITEMS_PER_PAGE+1} to {page*ITEMS_PER_PAGE>totalResults?totalResults:page*ITEMS_PER_PAGE} of {totalResults} results</Typography>
-        </Stack>    
-    
-    </Stack> 
+        </Stack>
+
+    </Stack>
     </>
   )
 }

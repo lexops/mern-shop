@@ -14,7 +14,7 @@ export const Address = ({id,type,street,postalCode,country,phoneNumber,state,cit
     const [open, setOpen] = useState(false);
     const status=useSelector(selectAddressStatus)
     const error=useSelector(selectAddressErrors)
-    
+
     const is480=useMediaQuery(theme.breakpoints.down(480))
 
     const handleRemoveAddress=()=>{
@@ -30,7 +30,7 @@ export const Address = ({id,type,street,postalCode,country,phoneNumber,state,cit
 
   return (
     <Stack width={'100%'} p={is480?0:1}>
-                                        
+
         {/* address type */}
         <Stack color={'whitesmoke'} p={'.5rem'} borderRadius={'.2rem'} bgcolor={theme.palette.primary.main}>
             <Typography>{type?.toUpperCase()}</Typography>
@@ -42,10 +42,10 @@ export const Address = ({id,type,street,postalCode,country,phoneNumber,state,cit
             {/* if the edit is true then this update from shows*/}
             {
                 edit?
-                (   
+                (
                     // update address form
                     <Stack rowGap={2}>
-                        
+
                         <Stack>
                             <Typography gutterBottom>Type</Typography>
                             <TextField {...register("type",{required:true,value:type})}/>

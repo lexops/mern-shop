@@ -5,5 +5,5 @@ const router=express.Router()
 router
     .get("/",categoryController.getAll)
 
-    
+
 module.exports=router

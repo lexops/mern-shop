@@ -52,12 +52,12 @@ export const ForgotPassword = () => {
         <Stack rowGap={'1rem'}>
             <Stack component={Paper} elevation={2}>
                 <Stack component={'form'} width={is500?"95vw":'30rem'} p={is500?"1rem":'1.5rem'} rowGap={'1rem'} noValidate onSubmit={handleSubmit(handleForgotPassword)}>
-                        
+
                         <Stack rowGap={'.4rem'}>
                             <Typography variant='h5' fontWeight={600}>{status==='fullfilled'?"Email has been sent!":"Forgot Your Password?"}</Typography>
                             <Typography color={'text.secondary'} variant='body2'>{status==='fullfilled'?"Please check your inbox and click on the received link to reset your password":"Enter your registered email below to receive password reset link"}</Typography>
                         </Stack>
-                        
+
                         {
                             status!=='fullfilled' &&
                         <>
@@ -73,7 +73,7 @@ export const ForgotPassword = () => {
                         }
                 </Stack>
             </Stack>
-            
+
             {/* back to login navigation */}
             <motion.div whileHover={{x:2}} whileTap={{scale:1.050}}>
                 <Typography sx={{textDecoration:"none",color:"text.primary",width:"fit-content"}} mt={2} to={'/login'} variant='body2' component={Link}>Go back to <span style={{color:theme.palette.primary.dark}}>login</span></Typography>

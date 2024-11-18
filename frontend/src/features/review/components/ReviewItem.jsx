@@ -37,7 +37,7 @@ export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
     setEdit(false)
   }
 
-  const isOwnReview=userid===loggedInUser?._id 
+  const isOwnReview=userid===loggedInUser?._id
 
   return (
     <Stack position={'relative'} p={2} rowGap={2} width={'100%'} component={Paper} borderRadius={'.8px'}>
@@ -46,7 +46,7 @@ export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
         <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
 
             <Stack flexDirection={'row'} columnGap={2}>
-                <Stack> 
+                <Stack>
                         <Typography variant='h6' fontSize={"1.1rem"} fontWeight={500}>{username}</Typography>
                         <motiondiv>
                             <Rating size={edit?is480?'medium':'large':"small"} readOnly={!edit} onChange={(e)=>setEditRating(e.target.value)} value={edit?editRating:rating}/>
@@ -86,7 +86,7 @@ export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
               </Stack>
             ):(<Typography color='graytext'>{comment}</Typography>)
           }
-            
+
         </Stack>
     </Stack>
   )

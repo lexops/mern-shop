@@ -18,7 +18,7 @@ export const UserProfile = () => {
     const theme=useTheme()
     const [addAddress,setAddAddress]=useState(false)
 
-    
+
     const addressAddStatus=useSelector(selectAddressAddStatus)
     const addressUpdateStatus=useSelector(selectAddressUpdateStatus)
     const addressDeleteStatus=useSelector(selectAddressDeleteStatus)
@@ -100,43 +100,43 @@ export const UserProfile = () => {
                             <Typography variant='h6' fontWeight={400}>Manage addresses</Typography>
                             <Button onClick={()=>setAddAddress(true)} size={is480?'small':""} variant='contained'>Add</Button>
                         </Stack>
-                        
+
                         {/* add address form - state dependent*/}
                         {
                             addAddress?(
                                 <Stack width={'100%'} component={'form'} noValidate onSubmit={handleSubmit(handleAddAddress)} rowGap={2}>
-                    
+
                                         <Stack>
                                             <Typography  gutterBottom>Type</Typography>
                                             <TextField placeholder='Eg. Home, Buisness' {...register("type",{required:true})}/>
                                         </Stack>
-                    
-                    
+
+
                                         <Stack>
                                             <Typography gutterBottom>Street</Typography>
                                             <TextField {...register("street",{required:true})}/>
                                         </Stack>
-                    
+
                                         <Stack>
                                             <Typography gutterBottom>Postal Code</Typography>
                                             <TextField type='number' {...register("postalCode",{required:true})}/>
                                         </Stack>
-                    
+
                                         <Stack>
                                             <Typography gutterBottom>Country</Typography>
                                             <TextField {...register("country",{required:true})}/>
                                         </Stack>
-                    
+
                                         <Stack>
                                             <Typography  gutterBottom>Phone Number</Typography>
                                             <TextField type='number' {...register("phoneNumber",{required:true})}/>
                                         </Stack>
-                    
+
                                         <Stack>
                                             <Typography gutterBottom>State</Typography>
                                             <TextField {...register("state",{required:true})}/>
                                         </Stack>
-                    
+
                                         <Stack>
                                             <Typography gutterBottom>City</Typography>
                                             <TextField {...register("city",{required:true})}/>
@@ -160,7 +160,7 @@ export const UserProfile = () => {
                                 ):(
                                     <Typography textAlign={'center'} mt={2} variant='body2'>You have no added addresses</Typography>
                                 )
-                            }      
+                            }
                         </Stack>
 
                     </Stack>

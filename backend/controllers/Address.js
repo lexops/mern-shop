@@ -16,7 +16,7 @@ exports.getByUserId = async (req, res) => {
         const {id}=req.params
         const results=await Address.find({user:id})
         res.status(200).json(results)
-    
+
     } catch (error) {
         console.log(error);
         res.status(500).json({message:'Error fetching addresses, please try again later'})
@@ -45,5 +45,3 @@ exports.deleteById=async(req,res)=>{
         res.status(500).json({message:'Error deleting address, please try again later'})
     }
 }
-
-

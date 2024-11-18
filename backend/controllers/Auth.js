@@ -10,7 +10,7 @@ const PasswordResetToken = require("../models/PasswordResetToken");
 exports.signup=async(req,res)=>{
     try {
         const existingUser=await User.findOne({email:req.body.email})
-        
+
         // if user already exists
         if(existingUser){
             return res.status(400).json({"message":"User already exists"})
@@ -101,7 +101,7 @@ exports.verifyOtp=async(req,res)=>{
             await Otp.findByIdAndDelete(isOtpExisting._id)
             return res.status(400).json({message:"Otp has been expired"})
         }
-        
+
         // checks if otp is there and matches the hash value then updates the user verified status to true and returns the updated user
         if(isOtpExisting && (await bcrypt.compare(req.body.otp,isOtpExisting.otp))){
             await Otp.findByIdAndDelete(isOtpExisting._id)
@@ -172,11 +172,11 @@ exports.forgotPassword=async(req,res)=>{
         await sendMail(isExistingUser.email,'Password Reset Link for Your MERN-AUTH-REDUX-TOOLKIT Account',`<p>Dear ${isExistingUser.name},
 
         We received a request to reset the password for your MERN-AUTH-REDUX-TOOLKIT account. If you initiated this request, please use the following link to reset your password:</p>
-        
+
         <p><a href=${process.env.ORIGIN}/reset-password/${isExistingUser._id}/${passwordResetToken} target="_blank">Reset Password</a></p>
-        
+
         <p>This link is valid for a limited time. If you did not request a password reset, please ignore this email. Your account security is important to us.
-        
+
         Thank you,
         The MERN-AUTH-REDUX-TOOLKIT Team</p>`)
 

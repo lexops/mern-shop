@@ -32,7 +32,7 @@ export const ProductBanner = ({images}) => {
         images.map((image,index) => (
         <div key={index} style={{width:"100%",height:'100%'}}>
             {
-            Math.abs(activeStep - index) <= 2 
+            Math.abs(activeStep - index) <= 2
                 ?
                 <Box component="img" sx={{width:'100%',objectFit:"contain"}} src={image} alt={'Banner Image'} />
                 :

@@ -9,7 +9,7 @@ import {toast} from 'react-toastify'
 
 
 export const OtpVerfication = () => {
-    
+
     const {register,handleSubmit,formState: { errors }} = useForm()
     const dispatch=useDispatch()
     const loggedInUser=useSelector(selectLoggedInUser)
@@ -34,7 +34,7 @@ export const OtpVerfication = () => {
         const data={user:loggedInUser?._id}
         dispatch(resendOtpAsync(data))
     }
-    
+
     const handleVerifyOtp=(data)=>{
         const cred={...data,userId:loggedInUser?._id}
         dispatch(verifyOtpAsync(cred))
@@ -83,15 +83,15 @@ export const OtpVerfication = () => {
   return (
     <Stack width={'100vw'} height={'100vh'} noValidate flexDirection={'column'} rowGap={3} justifyContent="center" alignItems="center" >
 
-        
+
         <Stack component={Paper} elevation={1} position={'relative'} justifyContent={'center'} alignItems={'center'} p={'2rem'} rowGap={'2rem'}>
-            
+
             <Typography mt={4} variant='h5' fontWeight={500}>Verify Your Email Address</Typography>
 
             {
                 resendOtpStatus==='fullfilled'?(
                     <Stack width={'100%'} rowGap={'1rem'} component={'form'} noValidate onSubmit={handleSubmit(handleVerifyOtp)}>
-                        <Stack rowGap={'1rem'}> 
+                        <Stack rowGap={'1rem'}>
                             <Stack>
                                 <Typography  color={'GrayText'}>Enter the 4 digit OTP sent on</Typography>
                                 <Typography fontWeight={'600'} color={'GrayText'}>{loggedInUser?.email}</Typography>

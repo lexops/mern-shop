@@ -20,7 +20,7 @@ export const Login = () => {
   const theme=useTheme()
   const is900=useMediaQuery(theme.breakpoints.down(900))
   const is480=useMediaQuery(theme.breakpoints.down(480))
-  
+
   // handles user redirection
   useEffect(()=>{
     if(loggedInUser && loggedInUser?.isVerified){
@@ -58,13 +58,13 @@ export const Login = () => {
 
   return (
     <Stack width={'100vw'} height={'100vh'} flexDirection={'row'} sx={{overflowY:"hidden"}}>
-        
+
         {
-          !is900 && 
-       
+          !is900 &&
+
         <Stack bgcolor={'black'} flex={1} justifyContent={'center'} >
           <Lottie animationData={ecommerceOutlookAnimation}/>
-        </Stack> 
+        </Stack>
         }
 
         <Stack flex={1} justifyContent={'center'} alignItems={'center'}>
@@ -85,12 +85,12 @@ export const Login = () => {
                       {errors.email && <FormHelperText sx={{mt:1}} error>{errors.email.message}</FormHelperText>}
                     </motion.div>
 
-                    
+
                     <motion.div whileHover={{y:-5}}>
                       <TextField type='password' fullWidth {...register("password",{required:"Password is required"})} placeholder='Password'/>
                       {errors.password && <FormHelperText sx={{mt:1}} error>{errors.password.message}</FormHelperText>}
                     </motion.div>
-                    
+
                     <motion.div whileHover={{scale:1.020}} whileTap={{scale:1}}>
                       <LoadingButton fullWidth  sx={{height:'2.5rem'}} loading={status==='pending'} type='submit' variant='contained'>Login</LoadingButton>
                     </motion.div>

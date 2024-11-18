@@ -60,25 +60,25 @@ export const ProductUpdate = () => {
 
   return (
     <Stack p={'0 16px'} justifyContent={'center'} alignItems={'center'} flexDirection={'row'} >
-        
+
         {
             selectedProduct &&
-        
-        <Stack width={is1100?"100%":"60rem"} rowGap={4} mt={is480?4:6} mb={6} component={'form'} noValidate onSubmit={handleSubmit(handleProductUpdate)}> 
-            
+
+        <Stack width={is1100?"100%":"60rem"} rowGap={4} mt={is480?4:6} mb={6} component={'form'} noValidate onSubmit={handleSubmit(handleProductUpdate)}>
+
             {/* feild area */}
             <Stack rowGap={3}>
                 <Stack>
                     <Typography variant='h6' fontWeight={400} gutterBottom>Title</Typography>
                     <TextField {...register("title",{required:'Title is required',value:selectedProduct.title})}/>
-                </Stack> 
+                </Stack>
 
                 <Stack flexDirection={'row'} >
 
                     <FormControl fullWidth>
                         <InputLabel id="brand-selection">Brand</InputLabel>
                         <Select defaultValue={selectedProduct.brand._id} {...register("brand",{required:"Brand is required"})} labelId="brand-selection" label="Brand">
-                            
+
                             {
                                 brands.map((brand)=>(
                                     <MenuItem value={brand._id}>{brand.name}</MenuItem>
@@ -92,7 +92,7 @@ export const ProductUpdate = () => {
                     <FormControl fullWidth>
                         <InputLabel id="category-selection">Category</InputLabel>
                         <Select defaultValue={selectedProduct.category._id} {...register("category",{required:"category is required"})} labelId="category-selection" label="Category">
-                            
+
                             {
                                 categories.map((category)=>(
                                     <MenuItem value={category._id}>{category.name}</MenuItem>

@@ -1,0 +1,138 @@
+name: Continous Integration
+
+on:
+  pull_request:
+    branches:
+      - release
+    types: [closed]
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.semver.outputs.tag }}
+    steps:
+      - name: Create semver tag based on PR labels
+        id: semver
+        uses: K-Phoen/semver-release-action@master
+        with:
+          release_branch: ${{ github.base_ref }}
+          release_strategy: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  frontend-build:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    needs: setup
+    if: ${{ github.event.pull_request.merged == true }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DEV_ECR_URL }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ${{ vars.DEV_ECR_URL }}/mern-shop/frontend:${{ needs.setup.outputs.tag }}
+            ${{ vars.DEV_ECR_URL }}/mern-shop/frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  backend-build:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    needs: setup
+    if: ${{ github.event.pull_request.merged == true }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DEV_ECR_URL }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ${{ vars.DEV_ECR_URL }}/mern-shop/backend:${{ needs.setup.outputs.tag }}
+            ${{ vars.DEV_ECR_URL }}/mern-shop/backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-to-dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    needs:
+      - setup
+      - frontend-build
+      - backend-build
+    if: ${{ github.event.pull_request.merged == true }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: Update Kubeconfig
+        run: |
+          aws eks update-kubeconfig --name ${{ vars.DEV_AWS_EKS_NAME }}
+
+      - name: Setup hcledit
+        run: |
+          wget https://github.com/minamijoyo/hcledit/releases/download/v0.2.15/hcledit_0.2.15_linux_amd64.tar.gz
+          tar -xzvf hcledit_0.2.15_linux_amd64.tar.gz
+          mv hcledit ~/.local/bin
+          hcledit version
+
+      - name: Update Helm Release via hcledit
+        run: |
+          hcledit attribute set mern_shop_version ${{ needs.setup.outputs.tag }} \
+          --file ./terraform/dev/terraform.tfvars
+          --update
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ⬆️ Bump mern-shop version to ${{ needs.setup.outputs.tag }}

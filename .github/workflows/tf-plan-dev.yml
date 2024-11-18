@@ -1,0 +1,39 @@
+name: Create terraform plan for dev
+
+on:
+  pull_request:
+    branches:
+      - release
+    paths:
+      - 'terraform/dev/*.tf'
+
+jobs:
+  plan:
+    name: Create a terraform plan
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: terraform plan
+        uses: dflook/terraform-plan@v1
+        with:
+          path: terraform/dev
+          var_file: terraform/dev/terraform.tfvars
+          backend_config_file: terraform/dev/backend.tf
+        env:
+          TERRAFORM_PRE_RUN: |
+            chmod +x tf-pre-run.sh
+            ./tf-pre-run.sh

@@ -1,0 +1,51 @@
+name: Tear Down Infra
+run-name: 🔥 Tear Down Infra in ${{ github.event.inputs.environment }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: 'Environment to tear down'
+        required: true
+        options:
+          - dev
+          - prod
+
+env:
+  ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+jobs:
+  apply:
+    name: Tear down infra
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Expose git commit data
+        uses: rlespinasse/git-commit-data-action@v1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.DEV_AWS_REGION }}
+          role-to-assume: ${{ vars.DEV_GHA_ROLE_ARN }}
+
+      - name: terraform apply
+        uses: dflook/terraform-destroy@v1
+        with:
+          auto_approve: true
+          path: terraform/${{ env.ENVIRONMENT }}
+          var_file: terraform/${{ env.ENVIRONMENT }}/terraform.tfvars
+          backend_config_file: terraform/${{ env.ENVIRONMENT }}/backend.tf
+        env:
+          TERRAFORM_PRE_RUN: |
+            chmod +x tf-pre-run.sh
+            ./tf-pre-run.sh

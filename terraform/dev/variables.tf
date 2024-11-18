@@ -22,3 +22,9 @@ variable "tags" {
     Environment = "Dev"
   }
 }
+
+variable "mern_shop_version" {
+  description = "The version of the mern-shop to deploy, e.g. v1.2.3. Defaults to v1.0.0"
+  type        = string
+  default     = "v1.0.0"
+}

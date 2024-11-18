@@ -22,7 +22,7 @@ resource "helm_release" "mern_shop" {
 
   set {
     name  = "backend.backend.image.tag"
-    value = "v1.0.0"
+    value = var.mern_shop_version
   }
   set {
     name  = "frontend.frontend.image.repository"
@@ -31,7 +31,7 @@ resource "helm_release" "mern_shop" {
 
   set {
     name  = "frontend.frontend.image.tag"
-    value = "v1.0.0"
+    value = var.mern_shop_version
   }
 
   set {

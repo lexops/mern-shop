@@ -10,13 +10,13 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | backend.backend.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
 | backend.backend.containerSecurityContext.readOnlyRootFilesystem | bool | `false` |  |
-| backend.backend.image.repository | string | `"lexops/mern-shop-backend"` |  |
+| backend.backend.image.repository | string | `"885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/backend"` |  |
 | backend.backend.image.tag | string | `"1.0.0"` |  |
 | backend.backend.resources.limits.cpu | string | `"500m"` |  |
 | backend.backend.resources.limits.memory | string | `"512Mi"` |  |
 | backend.backend.resources.requests.cpu | string | `"250m"` |  |
 | backend.backend.resources.requests.memory | string | `"256Mi"` |  |
-| backend.ports[0].name | string | `"8000"` |  |
+| backend.ports[0].name | string | `"http"` |  |
 | backend.ports[0].port | int | `8000` |  |
 | backend.ports[0].targetPort | int | `8000` |  |
 | backend.replicas | int | `2` |  |
@@ -24,7 +24,7 @@ A Helm chart for Kubernetes
 | backendConfig.cookieExpirationDays | string | `"30"` |  |
 | backendConfig.email | string | `"demo@gmail.com"` |  |
 | backendConfig.loginTokenExpiration | string | `"30d"` |  |
-| backendConfig.origin | string | `"http://localhost:8080"` |  |
+| backendConfig.origin | string | `"https://lexops.xyz"` |  |
 | backendConfig.otpExpirationTime | string | `"120000"` |  |
 | backendConfig.production | string | `"false"` |  |
 | backendSecrets.mongoUri | string | `"mongodb+srv://lexops:pUUeZAXrEEyLHQQ7@cluster0.ekai2.mongodb.net/mern-shop"` |  |
@@ -32,17 +32,18 @@ A Helm chart for Kubernetes
 | backendSecrets.secretKey | string | `"supersecret"` |  |
 | frontend.frontend.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
 | frontend.frontend.containerSecurityContext.readOnlyRootFilesystem | bool | `false` |  |
-| frontend.frontend.image.repository | string | `"lexops/mern-shop-frontend"` |  |
+| frontend.frontend.image.repository | string | `"885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend"` |  |
 | frontend.frontend.image.tag | string | `"1.0.0"` |  |
 | frontend.frontend.resources.limits.cpu | string | `"200m"` |  |
 | frontend.frontend.resources.limits.memory | string | `"256Mi"` |  |
 | frontend.frontend.resources.requests.cpu | string | `"100m"` |  |
 | frontend.frontend.resources.requests.memory | string | `"128Mi"` |  |
-| frontend.ports[0].name | string | `"8080"` |  |
-| frontend.ports[0].port | int | `8080` |  |
+| frontend.ports[0].name | string | `"http"` |  |
+| frontend.ports[0].port | int | `80` |  |
 | frontend.ports[0].targetPort | int | `80` |  |
 | frontend.replicas | int | `2` |  |
 | frontend.type | string | `"ClusterIP"` |  |
+| frontendConfig.backendUrl | string | `"https://lexops.xyz/api"` |  |
 | kubernetesClusterDomain | string | `"cluster.local"` |  |
 
 ----------------------------------------------

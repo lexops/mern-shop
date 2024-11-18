@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=values.schema.json
 backend:
   backend:
     containerSecurityContext:
@@ -51,4 +52,6 @@ frontend:
     targetPort: 80
   replicas: 2
   type: ClusterIP
+frontendConfig:
+  backendUrl: "https://lexops.xyz/api"
 kubernetesClusterDomain: cluster.local

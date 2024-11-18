@@ -4,6 +4,7 @@
   "properties": {
     "backend": {
       "additionalProperties": false,
+      "description": "yaml-language-server: $schema=values.schema.json",
       "properties": {
         "backend": {
           "additionalProperties": false,
@@ -35,7 +36,7 @@
               "additionalProperties": false,
               "properties": {
                 "repository": {
-                  "default": "lexops/mern-shop-backend",
+                  "default": "885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/backend",
                   "required": [],
                   "title": "repository",
                   "type": "string"
@@ -127,7 +128,7 @@
                 "additionalProperties": false,
                 "properties": {
                   "name": {
-                    "default": "8000",
+                    "default": "http",
                     "required": [],
                     "title": "name",
                     "type": "string"
@@ -203,7 +204,7 @@
           "type": "string"
         },
         "origin": {
-          "default": "http://localhost:8080",
+          "default": "https://lexops.xyz",
           "required": [],
           "title": "origin",
           "type": "string"
@@ -295,7 +296,7 @@
               "additionalProperties": false,
               "properties": {
                 "repository": {
-                  "default": "lexops/mern-shop-frontend",
+                  "default": "885405362274.dkr.ecr.us-east-1.amazonaws.com/mern-shop/frontend",
                   "required": [],
                   "title": "repository",
                   "type": "string"
@@ -387,13 +388,13 @@
                 "additionalProperties": false,
                 "properties": {
                   "name": {
-                    "default": "8080",
+                    "default": "http",
                     "required": [],
                     "title": "name",
                     "type": "string"
                   },
                   "port": {
-                    "default": 8080,
+                    "default": 80,
                     "required": [],
                     "title": "port",
                     "type": "integer"
@@ -441,6 +442,22 @@
       "title": "frontend",
       "type": "object"
     },
+    "frontendConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "backendUrl": {
+          "default": "https://lexops.xyz/api",
+          "required": [],
+          "title": "backendUrl",
+          "type": "string"
+        }
+      },
+      "required": [
+        "backendUrl"
+      ],
+      "title": "frontendConfig",
+      "type": "object"
+    },
     "global": {
       "description": "Global values are values that can be accessed from any chart or subchart by exactly the same name.",
       "required": [],
@@ -459,6 +476,7 @@
     "backendConfig",
     "backendSecrets",
     "frontend",
+    "frontendConfig",
     "kubernetesClusterDomain"
   ],
   "type": "object"

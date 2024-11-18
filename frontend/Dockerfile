@@ -1,5 +1,10 @@
 FROM node:20 AS build
 
+# This environment variable will be replaced with the actual value
+# during the build process
+# DO NOT CHANGE THIS LINE !!!
+ENV REACT_APP_BASE_URL=__BACKEND_URL__
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -8,7 +13,7 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-RUN npm run build 
+RUN npm run build
 
 FROM nginx:alpine
 

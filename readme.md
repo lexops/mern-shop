@@ -13,16 +13,16 @@
 - **Product Reviews:**
   - Write, edit, and delete reviews.
   - Instant updates on ratings and star percentages.
-  
+
 - **Wishlist:**
   - Add, remove, and annotate products with personalized notes.
-  
+
 - **Order Management:**
   - Create new orders and view order history.
-  
+
 - **Profile Management:**
   - Manage email, username, and multiple addresses.
-  
+
 - **Shopping Cart:**
   - Add products, adjust quantities, and view subtotals.
 
@@ -30,7 +30,7 @@
 - **Product Management:**
   - Add, edit, delete, and soft-delete products.
   - Manage product attributes like name and stock.
-  
+
 - **Order Management:**
   - View and update order details and status.
 
@@ -114,7 +114,7 @@ PRODUCTION="false" # Initially set to false for development
 - Add the following variable:
 ```bash
 # Backend URL (adjust if needed)
-REACT_APP_BASE_URL="http://localhost:8000" 
+REACT_APP_BASE_URL="http://localhost:8000"
 ```
 
 **Important**
@@ -139,7 +139,7 @@ REACT_APP_BASE_URL="http://localhost:8000"
 - Navigate to the `backend` directory: `cd backend`
 - Start the server: `npm run dev` (or npm start)
 - You should see a message indicating the server is running, usually on port 8000.
-     
+
 #### Start the frontend server:
 - Navigate to the `frontend` directory: `cd frontend`
 - Start the server: `npm start`

@@ -27,6 +27,9 @@ spec:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "mern-shop.fullname" . }}-frontend-config
         image: {{ .Values.frontend.frontend.image.repository }}:{{ .Values.frontend.frontend.image.tag
           | default .Chart.AppVersion }}
         livenessProbe:

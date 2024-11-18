@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - feat/ci
-    paths:  
+    paths:
       - 'terraform/dev/*.tf'
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -48,4 +48,3 @@ jobs:
             chmod 700 get_helm.sh
             ./get_helm.sh
             helm version
-    

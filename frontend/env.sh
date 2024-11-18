@@ -1,13 +1,16 @@
 #!/bin/sh
-for i in $(env | grep REACT_APP_)
-do
-    key=$(echo $i | cut -d '=' -f 1)
-    value=$(echo $i | cut -d '=' -f 2-)
-    echo $key=$value
-    # sed All files
-    # find /usr/share/nginx/html -type f -exec sed -i "s|${key}|${value}|g" '{}' +
 
-    # sed JS and CSS only
-    find /usr/share/nginx/html -type f -name '*.js' -exec sed -i "s|${key}|${value}|g" '{}' +
+# Replace the placeholder in main.*.js files with the environment variable
+if [ -z "$BACKEND_URL" ]; then
+    echo "BACKEND_URL environment variable is not set."
+    echo "Shutting down the container..."
+    exit 1
+fi
+
+# Find all minified JavaScript files (main.*.js)
+for file in $(find /usr/share/nginx/html -type f -name 'main.*.js'); do
+    # Perform the replacement in the minified JS file
+    sed -i "s|__BACKEND_URL__|$BACKEND_URL|g" "$file"
+
+    echo "Updated $file to use $BACKEND_URL"
 done
-echo 'done'

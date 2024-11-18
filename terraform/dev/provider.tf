@@ -15,13 +15,6 @@ terraform {
       version = "2.16.1"
     }
   }
-
-  backend "s3" {
-    bucket  = "desafio-hotmart-tfstate"
-    key     = "terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
-  }
 }
 
 provider "aws" {}
